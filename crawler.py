@@ -70,10 +70,10 @@ def save_download_list(name, url, flag, db):
                     'file_path': file_name,
                     'urls': [],
                     'latest': len(td_tags),
-                    'update_on': date.today(),
+                    'update_on': date.today().strftime('%Y-%m-%d'),
                     'ended': False
                 }
-            f.write(str(date.today()) + '\n')
+            f.write(date.today().strftime('%Y-%m-%d') + '\n')
             for td_tag in td_tags:
                 a_tag = td_tag.a
                 text = a_tag.getText()
