@@ -4,6 +4,7 @@ import os
 import re
 from urllib.request import urlopen, quote
 from urllib.error import HTTPError, URLError
+from datetime import date
 
 from bs4 import BeautifulSoup
 
@@ -48,6 +49,7 @@ def get_download_list(name, url):
             os.mkdir(file_path)
         file_name = os.path.join(file_path, name)
         with open(file_name + '.txt', 'w') as f:
+            f.write(str(date.today()) + '\n')
             for td_tag in td_tags:
                 a_tag = td_tag.a
                 f.write(a_tag.getText() + '\n')
