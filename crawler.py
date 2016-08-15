@@ -50,11 +50,14 @@ def main():
         print('0 get all')
         for aTag in aTags:
             print(aTags.index(aTag) + 1, re.sub(r'<font color="red">|</font>', r'', aTag.getText()), ': http://www.ygdy8.com%s' % aTag['href'])
+    print(len(aTags) + 1, 'exit')
     choice = input('choose result(s) to get download links: ')
     choice = choice.split(' ')
     urlList = []
     if choice[0] == '0':
         urlList = aTags
+    elif str(len(aTags) + 1) in choice:
+        return
     else:
         for i in choice:
             urlList.append(aTags[int(i) - 1])
