@@ -82,11 +82,24 @@ def save_download_list(name, url, flag, db):
                     document['urls'].append(text)
             if flag:
                 from pymongo import errors
+                collection = db.watchlist
                 try:
-                    db.watchlist.insert_one(document)
-                    db.watchlist.create_index('url', unique=True)
+                    collection.insert_one(document)
+                    collection.create_index('url', unique=True)
                 except errors.OperationFailure as e:
                     print('db error', e)
+                    print('update existing data')
+                    collection.update_one(
+                        {'url': url},
+                        {
+                            '$set': {
+                                'file_path': document['file_path'],
+                                'urls': document['urls'],
+                                'latest': document['latest'],
+                                'update_on': date.today().strftime('%Y-%m-%d')
+                            }
+                        }
+                    )
         return True
     except AttributeError as e:
         print('AttributeError: ', e)
