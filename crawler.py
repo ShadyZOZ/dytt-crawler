@@ -22,18 +22,14 @@ def get_db():
         return False, None
 
 def add_to_watch_list():
-    use_db_flag = False
     while True:
         option = input('Add to watch list (y/n)? ')
         if option == 'y':
-            use_db_flag = True
-            break
+            return get_db()
         elif option == 'n':
-            break
+            return False, None
         else:
             print('unrecognized option!')
-    if use_db_flag:
-        return get_db()
 
 def get_results(keyword):
     keyword_bytes = bytes(keyword, 'gbk')
