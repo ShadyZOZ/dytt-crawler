@@ -12,10 +12,11 @@ use_db = True
 
 try:
     from pymongo import MongoClient
+    print('pymongo found, running on db mode!')
 except ImportError as e:
     use_db = False
     print('import error:', e)
-    print('running in no db mode!')
+    print('running on no db mode!')
 
 def get_results(keyword):
     keyword_bytes = bytes(keyword, 'gbk')
