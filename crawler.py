@@ -151,6 +151,8 @@ def watch():
         video_infos = collection.find({'ended': False})
         for info in video_infos:
             save_download_list(info.name, info.url, flag, db)
+            print(info.name, 'updated')
+        print('all videos updated')
     else:
         print('db not ready')
 
