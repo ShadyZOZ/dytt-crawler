@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+import sys
 import os
 import re
 from urllib.request import urlopen, quote
@@ -137,5 +138,21 @@ def main():
             else:
                 print('require', url_info.getText(), 'failed')
 
+def watch():
+    flag, db = get_db()
+    if flag:
+        collection = db.dytt
+        video_infos = collection.find({'ended': False})
+        for info in video_infos:
+            save_download_list(info.name, info.url, flag, db)
+    else:
+        print('db not ready')
+
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) > 2:
+        if sys.argv[1] == 'watch':
+            watch()
+        else:
+            print('unknow command')
+    else:
+        main()
