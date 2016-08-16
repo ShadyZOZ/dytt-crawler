@@ -149,10 +149,12 @@ def watch():
         print('db not ready')
 
 if __name__ == '__main__':
-    if len(sys.argv) > 2:
+    if len(sys.argv) == 2:
         if sys.argv[1] == 'watch':
             watch()
         else:
             print('unknow command')
-    else:
+    elif len(sys.argv) == 1:
         main()
+    else:
+        print('unknow command')
