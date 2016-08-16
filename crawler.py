@@ -90,17 +90,23 @@ def save_download_list(name, url, flag, db):
                 except errors.OperationFailure as e:
                     print('db error', e)
                     print('update existing data')
-                    collection.update_one(
-                        {'url': url},
-                        {
-                            '$set': {
-                                'file_path': document['file_path'],
-                                'urls': document['urls'],
-                                'latest': document['latest'],
-                                'update_on': date.today().strftime('%Y-%m-%d')
+                    result = collection.find_one({'url': url})
+                    count = document['latest'] - result.latest
+                    if count > 0:
+                        collection.update_one(
+                            {'url': url},
+                            {
+                                '$set': {
+                                    'file_path': document['file_path'],
+                                    'urls': document['urls'],
+                                    'latest': document['latest'],
+                                    'update_on': date.today().strftime('%Y-%m-%d')
+                                }
                             }
-                        }
-                    )
+                        )
+                        print(count, 'new episode(s) found')
+                    else:
+                        print('no new episode found')
         return True
     except AttributeError as e:
         print('AttributeError: ', e)
