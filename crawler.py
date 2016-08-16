@@ -91,7 +91,7 @@ def save_download_list(name, url, flag, db):
                     print('db error', e)
                     print('update existing data')
                     result = collection.find_one({'url': url})
-                    count = document['latest'] - result.latest
+                    count = document['latest'] - result['latest']
                     if count > 0:
                         collection.update_one(
                             {'url': url},
@@ -150,8 +150,8 @@ def watch():
         collection = db.watchlist
         video_infos = collection.find({'ended': False})
         for info in video_infos:
-            save_download_list(info.name, info.url, flag, db)
-            print(info.name, 'updated')
+            save_download_list(info['name'], info['url'], flag, db)
+            print(info['name'], 'updated')
         print('all videos updated')
     else:
         print('db not ready')
