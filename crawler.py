@@ -147,7 +147,7 @@ def main():
 def watch():
     flag, db = get_db()
     if flag:
-        collection = db.dytt
+        collection = db.watchlist
         video_infos = collection.find({'ended': False})
         for info in video_infos:
             save_download_list(info.name, info.url, flag, db)
